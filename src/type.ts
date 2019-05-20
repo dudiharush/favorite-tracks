@@ -43,6 +43,7 @@ export interface ITack {
   has_richsync: number;
   num_favourite: number;
   album_id: number;
+  album_coverart_100x100: string;
   album_name: string;
   artist_id: number;
   artist_name: string;

@@ -30,30 +30,20 @@ export const Home = props => {
       .then(res => {
         if (res.data && res.data.message.body.track_list[0]) {
           const trackData = res.data.message.body.track_list[0].track;
-          axios
-            .get<IResult<IAlbumObject>>(
-              `https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/album.get?album_id=${
-                trackData.album_id
-              }&apikey=7629dddb1ec68ae1209b400db720c6ec`
-            )
-            .then(res => {
-              const albumData = res.data.message.body.album;
-              const track: IFavTrack = {
-                track_id: trackData.track_id,
-                track_name: trackData.track_name,
-                album_cover: albumData.album_coverart_100x100,
-                album_name: albumData.album_name,
-                artist_name: albumData.artist_name
-              };
-              if (
-                !favTracks.some(
-                  favTrack => favTrack.track_id === track.track_id
-                )
-              ) {
-                setFavTracks(state => [track, ...state]);
-              }
-              setIsLoadingTrack(false);
-            });
+
+          const track: IFavTrack = {
+            track_id: trackData.track_id,
+            track_name: trackData.track_name,
+            album_cover: trackData.album_coverart_100x100,
+            album_name: trackData.album_name,
+            artist_name: trackData.artist_name
+          };
+          if (
+            !favTracks.some(favTrack => favTrack.track_id === track.track_id)
+          ) {
+            setFavTracks(state => [track, ...state]);
+          }
+          setIsLoadingTrack(false);
         }
       });
   };
@@ -68,6 +58,7 @@ export const Home = props => {
       })
     );
   };
+  console.log("favTracks", favTracks);
 
   return (
     <div className="App">
